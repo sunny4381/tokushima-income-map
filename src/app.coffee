@@ -1,13 +1,24 @@
 $ ->
+  loadGeojson = (callback) ->
+    $.ajax
+      url: 'tokushima.geojson'
+      async: false
+      beforeSend: (xhr) ->
+        xhr.overrideMimeType('application/json; charset=UTF-8')
+      success: (data) ->
+        callback(data)
+      error: (xhr, status, error) ->
+        alert("geojson loading error: #{status}")
+
   loadCsv = (callback) ->
     $.ajax
       url: 'data.csv'
       async: false
-      beforeSend: (xhr) =>
+      beforeSend: (xhr) ->
         xhr.overrideMimeType('text/plain; charset=UTF-8')
-      success: (data) =>
+      success: (data) ->
         callback($.csv.toArrays(data))
-      error: (xhr, status, error) =>
+      error: (xhr, status, error) ->
         alert("data loading error: #{status}")
 
   mergeCsv = (geojson, csv) ->
@@ -61,20 +72,20 @@ $ ->
       zoom: 10
       mapTypeId: google.maps.MapTypeId.ROADMAP
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions)
-    $.getJSON('tokushima.geojson', (geojson) ->
+    loadGeojson((geojson) ->
       loadCsv((csv) ->
         mergeCsv(geojson, csv)
         map.data.addGeoJson(geojson)
-        map.data.setStyle(style)))
-    map.data.addListener('mouseover', (event) ->
-      data = event.feature.getProperty('data')
-      html = $.tmpl($("#info-box-template").html(), { data: data })
-      $('#info-box').html(html).show()
-      map.data.revertStyle()
-      map.data.overrideStyle(event.feature, {strokeWeight: 8}))
-    map.data.addListener('mouseout', (event) ->
-      $('#info-box').hide()
-      map.data.revertStyle())
+        map.data.setStyle(style)
+        map.data.addListener('mouseover', (event) ->
+          data = event.feature.getProperty('data')
+          html = $.tmpl($("#info-box-template").html(), { data: data })
+          $('#info-box').html(html).show()
+          map.data.revertStyle()
+          map.data.overrideStyle(event.feature, {strokeWeight: 8}))
+        map.data.addListener('mouseout', (event) ->
+          $('#info-box').hide()
+          map.data.revertStyle())))
 
   initializeMap()
 
