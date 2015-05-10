@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>徳島県の市町村</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="style.css">
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+  <script src="//ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyA81oId3-qm08mbTzel8702XwFYxzDypgs&sensor=false">
+</head>
+<body>
+  <div id="map-canvas"></div>
+  <div id="info-box" style="display: none;">info</div>
+  <script type="template" id="info-box-template">
+    <h2>${data['市町村']}</h2>
+    <dl>
+      <dt>総生産額</dt><dd>{{= formatNumber(data['総生産額'])}} 百万円</dd>
+      <dt>経済成長率</dt><dd>${data['経済成長率']} %</dd>
+      <dt>第１次産業</dt><dd>{{= formatNumber(data['第１次産業'])}} 百万円</dd>
+      <dt>第２次産業</dt><dd>{{= formatNumber(data['第２次産業'])}} 百万円</dd>
+      <dt>第３次産業</dt><dd>{{= formatNumber(data['第３次産業'])}} 百万円</dd>
+      <dt>市町村民所得</dt><dd>{{= formatNumber(data['市町村民所得'])}} 百万円</dd>
+      <dt>面積</dt><dd>${data['面積']} k㎡</dd>
+      <dt>人口</dt><dd>{{= formatNumber(data['人口'])}} 人</dd>
+      <dt>H23 1人当たり市町村民所得</dt><dd>{{= formatNumber(data['1人当たり市町村民所得_H23'])}} 千円</dd>
+      <dt>H24 1人当たり市町村民所得</dt><dd>{{= formatNumber(data['1人当たり市町村民所得_H24'])}} 千円</dd>
+    </dl>
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>

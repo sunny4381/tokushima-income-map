@@ -1,0 +1,35 @@
+/* normlize */
+/* @import url('../node_modules/normalize-css/normalize.css'); */
+
+/* more global styles if needed */
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map-canvas {
+  height: 100%;
+}
+
+#info-box {
+  background-color: white;
+  border: 1px solid black;
+  left: 30px;
+  bottom: 30px;
+  padding: 10px;
+  position: absolute;
+  font-size: 0.8em;
+}
+
+#info-box dt {
+  font-weight: bold;
+}
+
+#info-box dd {
+  text-align: right;
+}
